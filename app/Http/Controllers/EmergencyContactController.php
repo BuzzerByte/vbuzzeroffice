@@ -36,6 +36,15 @@ class EmergencyContactController extends Controller
     public function store(Request $request)
     {
         //
+        $store = EmergencyContact::create([
+            'name'=>$request->name,
+            'relationship'=>$request->relationship,
+            'home_tel'=>$request->home_telephone,
+            'mobile'=>$request->mobile,
+            'work_tel'=>$request->work_telephone,
+            'employee_id'=>$request->employee_id
+        ]);
+        return redirect()->action('UserController@contactDetails',['id'=>$request->employee_id]);
     }
 
     /**

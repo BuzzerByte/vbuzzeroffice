@@ -15,6 +15,8 @@ class SalaryComponentController extends Controller
     public function index()
     {
         //
+        $salaries = SalaryComponent::all();
+        return view('admin.salarycomponents.index',['salaries'=>$salaries]);
     }
 
     /**
@@ -36,6 +38,14 @@ class SalaryComponentController extends Controller
     public function store(Request $request)
     {
         //
+        $store = SalaryComponent::create([
+            'component_name' => $request->component_name,
+            'type' => (int)$request->type,
+            'total_payable' => $request->total_payable,
+            'cost_company'=>$request->cost_company,
+            'value_type'=>(int)$request->value_type
+        ]);
+        return redirect()->action('SalaryComponentController@index');
     }
 
     /**
@@ -58,6 +68,7 @@ class SalaryComponentController extends Controller
     public function edit(SalaryComponent $salaryComponent)
     {
         //
+        return response()->json($salarycomponent);
     }
 
     /**
@@ -70,6 +81,14 @@ class SalaryComponentController extends Controller
     public function update(Request $request, SalaryComponent $salaryComponent)
     {
         //
+        $update = SalaryComponent::where('id',$salarycomponent->id)->update([
+            'component_name' => $request->component_name,
+            'type' => (int)$request->type,
+            'total_payable' => $request->total_payable,
+            'cost_company' => $request->cost_company,
+            'value_type' => (int)$request->value_type
+        ]);
+        return redirect()->action('SalaryComponentController@index');
     }
 
     /**
@@ -81,5 +100,11 @@ class SalaryComponentController extends Controller
     public function destroy(SalaryComponent $salaryComponent)
     {
         //
+    }
+
+    public function delete(SalaryComponent $salarycomponent){
+        $delete = SalaryComponent::find($salarycomponent->id);
+        $delete->delete();
+        return redirect()->action('SalaryComponentController@index');
     }
 }

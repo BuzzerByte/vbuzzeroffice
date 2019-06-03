@@ -33,6 +33,46 @@ Route::group(['middleware' => 'api'], function () {
     Route::get('roles/{role}/permissions', 'RoleController@permissions')->middleware('permission:' . \App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
     Route::apiResource('permissions', 'PermissionController')->middleware('permission:' . \App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
 
+    Route::apiResource('clients','ClientController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('vendors','VendorController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('applications','ApplicationController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('attendances','AttendanceController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('awards','AwardController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('cateogories','CategoryController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('commencements','CommencementController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('contactdetails','ContactDetailController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('departments','DepartmentController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('dependents','DependentController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('deposits','DepositController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('emergencycontacts','EmergencyContactController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('holidays','HolidayController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('inventories','InventoryController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('jobcategories','JobCategoryController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('jobhistories','JobHistoryController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('jobtitles','JobTitleController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('leavetypes','LeaveTypeController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('orders','OrderController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('paygrades','PayGradeController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('payments','PaymentController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('purchases','PurchaseController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('purchaseproducts','PurchaseProductController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('quotations','QuotationController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('quotationproducts','QuotationProductController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('reimbursements','ReimbursementController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('salaries','SalaryController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('salarycomponents','SalaryComponentController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('saleproducts','SaleProductController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('statuses','StatusController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('subordinates','SubordinateController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('supervisors','SupervisorController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('taxes','TaxController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('terminations','TerminationController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('userattachments','UserAttachmentController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('vendors','VendorController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('withdrawals','WithdrawalController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('workingdays','WorkingDayController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::apiResource('workshifts','WorkShiftController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    
     // Fake APIs
     Route::get('/table/list', function () {
         $rowsNumber = mt_rand(20, 30);

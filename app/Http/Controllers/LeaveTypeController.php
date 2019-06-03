@@ -15,6 +15,8 @@ class LeaveTypeController extends Controller
     public function index()
     {
         //
+        $leavetypes = LeaveType::all();
+        return view('admin.leavetypes.index',['leavetypes'=>$leavetypes]);
     }
 
     /**
@@ -36,6 +38,10 @@ class LeaveTypeController extends Controller
     public function store(Request $request)
     {
         //
+        $store = LeaveType::create([
+            'name'=>$request->leave
+        ]);
+        return redirect()->action('LeaveTypeController@index');
     }
 
     /**
@@ -58,6 +64,7 @@ class LeaveTypeController extends Controller
     public function edit(LeaveType $leaveType)
     {
         //
+        return response()->json($leavetype);
     }
 
     /**
@@ -70,6 +77,10 @@ class LeaveTypeController extends Controller
     public function update(Request $request, LeaveType $leaveType)
     {
         //
+        $update = LeaveType::where('id',$leavetype->id)->update([
+            'name'=>$request->leave
+        ]);
+        return redirect()->action('LeaveTypeController@index');
     }
 
     /**
@@ -81,5 +92,11 @@ class LeaveTypeController extends Controller
     public function destroy(LeaveType $leaveType)
     {
         //
+    }
+
+    public function delete(LeaveType $leavetype){
+        $delete = LeaveType::find($leavetype->id);
+        $delete->delete(); 
+        return redirect()->action('LeaveTypeController@index');
     }
 }

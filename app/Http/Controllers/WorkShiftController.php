@@ -15,6 +15,8 @@ class WorkShiftController extends Controller
     public function index()
     {
         //
+        $workshifts = WorkShift::all();
+        return view('admin.workShifts.index',['workshifts'=>$workshifts]);
     }
 
     /**
@@ -36,6 +38,14 @@ class WorkShiftController extends Controller
     public function store(Request $request)
     {
         //
+        $request->shift_from = Carbon::parse($request->shift_from)->format('H:i');
+        $request->shift_to = Carbon::parse($request->shift_to)->format('H:i');
+        $store = WorkShift::create([
+            'name'=>$request->shift_name,
+            'from'=>$request->shift_from,
+            'to'=>$request->shift_to
+        ]);
+        return redirect()->action('WorkShiftController@index');
     }
 
     /**

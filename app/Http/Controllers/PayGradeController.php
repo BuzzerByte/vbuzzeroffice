@@ -15,6 +15,8 @@ class PayGradeController extends Controller
     public function index()
     {
         //
+        $paygrades = PayGrade::all();
+        return view('admin.paygrades.index',['paygrades'=>$paygrades]);
     }
 
     /**
@@ -36,6 +38,13 @@ class PayGradeController extends Controller
     public function store(Request $request)
     {
         //
+        //
+        $store = PayGrade::create([
+            'name'=>$request->grade_name,
+            'minimum'=>(double)$request->min_salary,
+            'maximum'=>(double)$request->max_salary
+        ]);
+        return redirect()->action('PayGradeController@index');
     }
 
     /**
@@ -58,6 +67,7 @@ class PayGradeController extends Controller
     public function edit(PayGrade $payGrade)
     {
         //
+        return response()->json($paygrade);
     }
 
     /**
@@ -70,6 +80,12 @@ class PayGradeController extends Controller
     public function update(Request $request, PayGrade $payGrade)
     {
         //
+        $update = PayGrade::where('id',$paygrade->id)->update([
+            'name'=>$request->grade_name,
+            'minimum'=>$request->min_salary,
+            'maximum'=>$request->max_salary
+        ]);
+        return redirect()->action('PayGradeController@index');
     }
 
     /**
@@ -81,5 +97,11 @@ class PayGradeController extends Controller
     public function destroy(PayGrade $payGrade)
     {
         //
+    }
+
+    public function delete(PayGrade $paygrade){
+        $delete = PayGrade::find($paygrade->id);
+        $delete->delete();
+        return redirect()->action('PayGradeController@index');
     }
 }

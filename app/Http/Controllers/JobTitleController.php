@@ -15,6 +15,8 @@ class JobTitleController extends Controller
     public function index()
     {
         //
+        $jobtitles = JobTitle::all();
+        return view('admin.jobtitles.index',['jobtitles'=>$jobtitles]);
     }
 
     /**
@@ -36,6 +38,11 @@ class JobTitleController extends Controller
     public function store(Request $request)
     {
         //
+        $store = JobTitle::create([
+            'title'=>$request->title,
+            'description'=>$request->description
+        ]);
+        return redirect()->action('JobTitleController@index');
     }
 
     /**
@@ -58,6 +65,7 @@ class JobTitleController extends Controller
     public function edit(JobTitle $jobTitle)
     {
         //
+        return response()->json($jobtitle);
     }
 
     /**
@@ -70,6 +78,11 @@ class JobTitleController extends Controller
     public function update(Request $request, JobTitle $jobTitle)
     {
         //
+        $update = JobTitle::where('id',$jobtitle->id)->update([
+            'title'=>$request->department,
+            'description'=>$request->description
+        ]);
+        return redirect()->action('JobTitleController@index');
     }
 
     /**
@@ -81,5 +94,11 @@ class JobTitleController extends Controller
     public function destroy(JobTitle $jobTitle)
     {
         //
+    }
+
+    public function delete(JobTitle $jobtitle){
+        $delete = JobTitle::find($jobtitle->id);
+        $delete->delete();
+        return redirect()->action('JobTitleController@index');
     }
 }

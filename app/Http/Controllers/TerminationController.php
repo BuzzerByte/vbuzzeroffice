@@ -35,9 +35,27 @@ class TerminationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $store = EmployeeTermination::updateOrCreate(
+            [
+                'employee_id'=>(int)$request->employee_id
+            ],[
+                'date'=>$request->termination_date,
+                'reason'=>$request->termination_reason,
+                'note'=>$request->termination_note
+            ]
+        );
+        User::where('id',$request->employee_id)->update([
+            'terminate_status'=>1
+        ]);
+        return redirect()->action('UserController@show',['id'=>$request->employee_id]);
     }
 
+    public function unterminate(EmployeeTermination $employeeTermination){
+        User::where('id',$employeeTermination->employee_id)->update([
+            'terminate_status'=>0
+        ]);
+        return redirect()->action('UserController@show',['id'=>$employeeTermination->employee_id]);
+    }
     /**
      * Display the specified resource.
      *
@@ -47,6 +65,8 @@ class TerminationController extends Controller
     public function show(Termination $termination)
     {
         //
+        $employee = User::where('id',$employeeTermination->employee_id)->first();
+        return view('admin.employeeTerminations.show',['employee'=>$employee, 'terminated'=>$employeeTermination]);
     }
 
     /**
@@ -70,6 +90,12 @@ class TerminationController extends Controller
     public function update(Request $request, Termination $termination)
     {
         //
+        $update = EmployeeTermination::where('id',$employeeTermination->id)->update([
+            'date'=>$request->termination_date,
+            'reason'=>$request->termination_reason,
+            'note'=>$request->termination_note
+        ]);
+        return redirect()->action('EmployeeTerminationController@show',['id'=>$employeeTermination->id]);
     }
 
     /**

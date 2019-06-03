@@ -67,9 +67,26 @@ class SalaryController extends Controller
      * @param  \App\Salary  $salary
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Salary $salary)
+    public function update(Request $request, EmployeeSalary $employeeSalary)
     {
-        //
+        $update = EmployeeSalary::where('id',$employeeSalary->id)->update([
+            'type'=>$request->type,
+            'pay_grade'=>$request->grade_id,
+            'comment'=>$request->comment,
+            'basic_payment'=>$request->basic_payment,
+            'car_allowance'=>$request->car_allowance,
+            'medical_allowance'=>$request->medical_allowance,
+            'living_allowance'=>$request->living_allowance,
+            'house_rent'=>$request->house_rent,
+            'gratuity'=>$request->gratuity,
+            'pension'=>$request->pension,
+            'insurance'=>$request->insurance,
+            'total_deduction'=>$request->total_deduction,
+            'total_payable'=>$request->total_payable,
+            'cost_to_company'=>$request->total_cost_company,
+            'hourly_salary'=>$request->hourly_salary
+        ]);
+        return redirect()->action('UserController@employeeSalaries',['id'=>$employeeSalary->employee_id]);
     }
 
     /**

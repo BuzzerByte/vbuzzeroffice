@@ -15,6 +15,9 @@ class WorkingDayController extends Controller
     public function index()
     {
         //
+        $working = WorkingDay::all();   
+        // return response()->json($working);
+        return view('admin.workingdays.index',['work'=>$working]);
     }
 
     /**
@@ -36,6 +39,33 @@ class WorkingDayController extends Controller
     public function store(Request $request)
     {
         //
+        if($request->working_days == null){
+            //add session at last
+            return redirect()->action('WorkingDayController@index');
+        }
+        $working_days_arr = $request->working_days;
+        $days_arr = $request->days;
+        $enable_arr = [0,0,0,0,0,0,0];
+        $day_name = ['saturday','sunday','monday','tuesday','wednesday','thursday','friday'];
+        
+        foreach($days_arr as $index => $day){
+            foreach($working_days_arr as $w_day){
+                if($w_day == $day){
+                    $enable_arr[$index] = 1;
+                    break;
+                }else{
+                    continue;
+                }
+            }
+        }
+
+        foreach($day_name as $index=>$name){
+            WorkingDay::updateOrCreate(
+                ['day' => $day_name[$index]],
+                ['work'=>$enable_arr[$index]]
+            );
+        }
+        return redirect()->action('WorkingDayController@index');
     }
 
     /**

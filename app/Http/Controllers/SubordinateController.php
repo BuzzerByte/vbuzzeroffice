@@ -36,6 +36,12 @@ class SubordinateController extends Controller
     public function store(Request $request)
     {
         //
+        $store = EmployeeSubordinate::create([
+            'department_id'=>$request->department_id,
+            'subordinate_id'=>$request->subordinate_id,
+            'employee_id'=>$request->employee_id
+        ]);
+        return redirect()->action('UserController@reportTo',['id'=>$request->employee_id]);
     }
 
     /**
@@ -58,6 +64,7 @@ class SubordinateController extends Controller
     public function edit(Subordinate $subordinate)
     {
         //
+        return response()->json($employeeSubordinate);
     }
 
     /**
@@ -70,6 +77,11 @@ class SubordinateController extends Controller
     public function update(Request $request, Subordinate $subordinate)
     {
         //
+        $update = EmployeeSubordinate::where('id',$employeeSubordinate->id)->update([
+            'department_id'=>$request->department_id,
+            'subordinate_id'=>$request->subordinate_id
+        ]);
+        return redirect()->action('UserController@reportTo',['id'=>$employeeSubordinate->employee_id]);
     }
 
     /**
@@ -81,5 +93,18 @@ class SubordinateController extends Controller
     public function destroy(Subordinate $subordinate)
     {
         //
+    }
+
+    public function delete(Request $request){
+        $subordinateId_arr = $request->subordinateId;
+        if($subordinateId_arr!=null){
+            foreach($subordinateId_arr as $id){
+                $subordinate = EmployeeSubordinate::find((int)$id);
+                $subordinate->delete();
+            }
+            return redirect()->action('UserController@reportTo',['id'=>$request->employee_id]);
+        }else{
+            return redirect()->action('UserController@reportTo',['id'=>$request->employee_id]);
+        }
     }
 }

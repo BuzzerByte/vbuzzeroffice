@@ -36,6 +36,12 @@ class SupervisorController extends Controller
     public function store(Request $request)
     {
         //
+        $store = EmployeeSupervisor::create([
+            'department_id'=>$request->department_id,
+            'supervisor_id'=>$request->supervisor_id,
+            'employee_id'=>$request->employee_id
+        ]);
+        return redirect()->action('UserController@reportTo',['id'=>$request->employee_id]);
     }
 
     /**
@@ -58,6 +64,7 @@ class SupervisorController extends Controller
     public function edit(Supervisor $supervisor)
     {
         //
+        return response()->json($employeeSupervisor);
     }
 
     /**
@@ -70,6 +77,11 @@ class SupervisorController extends Controller
     public function update(Request $request, Supervisor $supervisor)
     {
         //
+        $update = EmployeeSupervisor::where('id',$employeeSupervisor->id)->update([
+            'department_id'=>$request->department_id,
+            'supervisor_id'=>$request->supervisor_id,
+        ]);
+        return redirect()->action('UserController@reportTo',['id'=>$employeeSupervisor->employee_id]);
     }
 
     /**
@@ -81,5 +93,18 @@ class SupervisorController extends Controller
     public function destroy(Supervisor $supervisor)
     {
         //
+    }
+
+    public function delete(Request $request){
+        $supervisorId_arr = $request->supervisorId;
+        if($supervisorId_arr!=null){
+            foreach($supervisorId_arr as $id){
+                $supervisor = EmployeeSupervisor::find((int)$id);
+                $supervisor->delete();
+            }
+            return redirect()->action('UserController@reportTo',['id'=>$request->employee_id]);
+        }else{
+            return redirect()->action('UserController@reportTo',['id'=>$request->employee_id]);
+        }
     }
 }

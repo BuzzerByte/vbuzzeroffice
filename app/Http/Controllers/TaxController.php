@@ -15,6 +15,8 @@ class TaxController extends Controller
     public function index()
     {
         //
+        $taxes = Tax::all();
+        return view('admin.taxes.index',['taxes'=>$taxes]);
     }
 
     /**
@@ -36,6 +38,12 @@ class TaxController extends Controller
     public function store(Request $request)
     {
         //
+        $store = Tax::create([
+            'name'=>$request->name,
+            'rate'=>$request->rate,
+            'type'=>$request->type
+        ]);
+        return redirect()->action('TaxController@index');
     }
 
     /**
@@ -70,6 +78,12 @@ class TaxController extends Controller
     public function update(Request $request, Tax $tax)
     {
         //
+        $update = Tax::where('id',$tax->id)->update([
+            'name'=>$request->name,
+            'rate'=>$request->rate,
+            'type'=>(int)$request->type
+        ]);
+        return redirect()->action('TaxController@index');
     }
 
     /**
@@ -81,5 +95,12 @@ class TaxController extends Controller
     public function destroy(Tax $tax)
     {
         //
+    }
+
+    public function delete(Tax $tax){
+        $delete = Tax::find($tax->id);
+        $delete->delete();
+        
+        return redirect()->action('TaxController@index');
     }
 }

@@ -15,6 +15,8 @@ class StatusController extends Controller
     public function index()
     {
         //
+        $status = EmployeeStatus::all();
+        return view('admin.employeestatus.index',['status'=>$status]);
     }
 
     /**
@@ -36,6 +38,10 @@ class StatusController extends Controller
     public function store(Request $request)
     {
         //
+        $store = EmployeeStatus::create([
+            'status' => $request->status
+        ]);
+        return redirect()->action('EmployeeStatusController@index');
     }
 
     /**
@@ -58,6 +64,7 @@ class StatusController extends Controller
     public function edit(Status $status)
     {
         //
+        return response()->json($employeestatus);
     }
 
     /**
@@ -70,6 +77,10 @@ class StatusController extends Controller
     public function update(Request $request, Status $status)
     {
         //
+        $update = EmployeeStatus::where('id',$employeestatus->id)->update([
+            'status'=>$request->status
+        ]);
+        return redirect()->action('EmployeeStatusController@index');
     }
 
     /**
@@ -81,5 +92,11 @@ class StatusController extends Controller
     public function destroy(Status $status)
     {
         //
+    }
+
+    public function delete(EmployeeStatus $employeestatus){
+        $delete = EmployeeStatus::find($employeestatus->id);
+        $delete->delete();
+        return redirect()->action('EmployeeStatusController@index');
     }
 }

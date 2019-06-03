@@ -15,6 +15,8 @@ class JobCategoryController extends Controller
     public function index()
     {
         //
+        $jobcategories = JobCategory::all();
+        return view('admin.jobCategories.index',['jobcategories'=>$jobcategories]);
     }
 
     /**
@@ -36,6 +38,10 @@ class JobCategoryController extends Controller
     public function store(Request $request)
     {
         //
+        $store = JobCategory::create([
+            'category'=>$request->category
+        ]);
+        return redirect()->action('JobCategoryController@index');
     }
 
     /**
@@ -58,6 +64,7 @@ class JobCategoryController extends Controller
     public function edit(JobCategory $jobCategory)
     {
         //
+        return response()->json($jobCategory);
     }
 
     /**
@@ -70,6 +77,10 @@ class JobCategoryController extends Controller
     public function update(Request $request, JobCategory $jobCategory)
     {
         //
+        $update = JobCategory::where('id',$jobCategory->id)->update([
+            'category'=>$request->category
+        ]);
+        return redirect()->action('JobCategoryController@index');
     }
 
     /**
@@ -81,5 +92,11 @@ class JobCategoryController extends Controller
     public function destroy(JobCategory $jobCategory)
     {
         //
+    }
+
+    public function delete(JobCategory $jobCategory){
+        $delete = JobCategory::find($jobCategory->id);
+        $delete->delete();
+        return redirect()->action('JobCategoryController@index');
     }
 }

@@ -15,6 +15,8 @@ class HolidayController extends Controller
     public function index()
     {
         //
+        $holidays = Holiday::all();
+        return view('admin.holidays.index',['holidays'=>$holidays]);
     }
 
     /**
@@ -36,6 +38,13 @@ class HolidayController extends Controller
     public function store(Request $request)
     {
         //
+        $store = Holiday::create([
+            'name' => $request->event_name,
+            'description'=>$request->description,
+            'start' => $request->start_date,
+            'end'=>$request->end_date
+        ]);
+        return redirect()->action('HolidayController@index');
     }
 
     /**
@@ -58,6 +67,7 @@ class HolidayController extends Controller
     public function edit(Holiday $holiday)
     {
         //
+        return response()->json($holiday);
     }
 
     /**
@@ -70,6 +80,13 @@ class HolidayController extends Controller
     public function update(Request $request, Holiday $holiday)
     {
         //
+        $update = Holiday::where('id',$holiday->id)->update([
+            'name'=>$request->event_name,
+            'description'=>$request->description,
+            'start'=>$request->start_date,
+            'end'=>$request->end_date
+        ]);
+        return redirect()->action('HolidayController@index');
     }
 
     /**
@@ -81,5 +98,11 @@ class HolidayController extends Controller
     public function destroy(Holiday $holiday)
     {
         //
+    }
+
+    public function delete(Holiday $holiday){
+        $delete = Holiday::find($holiday->id);
+        $delete->delete();
+        return redirect()->action('HolidayController@index');
     }
 }

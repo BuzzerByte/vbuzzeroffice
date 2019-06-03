@@ -36,6 +36,21 @@ class UserAttachmentController extends Controller
     public function store(Request $request)
     {
         //
+        if ($request->hasFile('file')) {
+            $attachment = $request->file('file');
+            $name = $attachment->getClientOriginalName();
+            $destinationPath = public_path('/employeeAttachments');
+            $attachment->move($destinationPath, $name);
+        }else{
+            $name = "-";
+        }
+        $store = UserAttachment::create([
+            'name'=>$name,
+            'description'=>$request->description,
+            'added_by'=>Auth::user()->name,
+            'user_id'=>$request->user_id
+        ]);
+        return redirect()->action('UserController@show',['id'=>$request->user_id]);
     }
 
     /**
@@ -81,5 +96,18 @@ class UserAttachmentController extends Controller
     public function destroy(UserAttachment $userAttachment)
     {
         //
+    }
+
+    public function delete(Request $request){
+        $attachmentId_array = $request->personalAttach;
+        if($attachmentId_array!=null){
+            foreach($attachmentId_array as $id){
+                $attachment = UserAttachment::find((int)$id);
+                $attachment->delete();
+            }
+            return redirect()->action('UserController@show',['id'=>$request->employee_id]);
+        }else{
+            return redirect()->action('UserController@show',['id'=>$request->employee_id]);
+        }
     }
 }
