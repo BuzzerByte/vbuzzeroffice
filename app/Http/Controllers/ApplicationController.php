@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Application;
 use Illuminate\Http\Request;
+use App\LeaveType; 
 
 class ApplicationController extends Controller
 {
