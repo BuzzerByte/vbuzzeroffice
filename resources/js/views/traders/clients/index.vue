@@ -102,12 +102,12 @@
             <div class="form-container" v-loading="userCreating">
                 <el-form ref="userForm" :rules="rules" :model="newUser" label-position="left" label-width="150px"
                     style="max-width: 500px;">
-                    <el-form-item :label="$t('user.role')" prop="role">
+                    <!-- <el-form-item :label="$t('user.role')" prop="role">
                         <el-select v-model="newUser.role" class="filter-item" placeholder="Please select role">
                             <el-option v-for="item in nonAdminRoles" :key="item" :label="item | uppercaseFirst"
                                 :value="item" />
                         </el-select>
-                    </el-form-item>
+                    </el-form-item> -->
                     <el-form-item :label="$t('user.name')" prop="name">
                         <el-input v-model="newUser.name" />
                     </el-form-item>
