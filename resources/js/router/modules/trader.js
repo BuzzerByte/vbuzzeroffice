@@ -13,13 +13,13 @@ const traderRoutes = {
   children: [
     {
       path: 'view-client',
-      component: () => import('@/views/traders/clients/'),
+      component: () => import('@/views/traders/clients'),
       name: 'Client',
       meta: { title: 'Client' },
     },
     {
       path: 'view-vendor',
-      component: () => import('@/views/traders/vendors/'),
+      component: () => import('@/views/traders/vendors'),
       name: 'Vendor',
       meta: { title: 'Vendor' },
     },

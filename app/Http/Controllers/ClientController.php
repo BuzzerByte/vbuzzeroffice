@@ -2,25 +2,51 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PermissionResource;
+use App\Http\Resources\UserResource;
+use App\Http\Resources\ClientResource;
+use App\Laravue\Acl;
+use App\Laravue\JsonResponse;
+use App\Laravue\Models\Permission;
+use App\Laravue\Models\Role;
+use App\Laravue\Models\User;
 use App\Client;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use Validator;
 class ClientController extends Controller
 {
+    const ITEM_PER_PAGE = 15;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $clients = Client::all();
-        if(empty($clients)){
-            return view('admin.clients.index',['clients'=>'No Client']);
-        }else{
-            return view('admin.clients.index',['clients'=>$clients]);
+        
+        $searchParams = $request->all();
+        $userQuery = Client::query();
+        $limit = Arr::get($searchParams, 'limit', static::ITEM_PER_PAGE);
+        $role = Arr::get($searchParams, 'role', '');
+        $keyword = Arr::get($searchParams, 'keyword', '');
+        
+        if (!empty($role)) {
+            $userQuery->whereHas('roles', function($q) use ($role) { $q->where('name', $role); });
+           
         }
+        
+        if (!empty($keyword)) {
+            $userQuery->where('name', 'LIKE', '%' . $keyword . '%');
+            $userQuery->where('email', 'LIKE', '%' . $keyword . '%');
+            
+        }
+       
+        return ClientResource::collection($userQuery->paginate($limit));
     }
 
     /**

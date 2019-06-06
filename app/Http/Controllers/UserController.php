@@ -46,16 +46,18 @@ class UserController extends Controller
         $limit = Arr::get($searchParams, 'limit', static::ITEM_PER_PAGE);
         $role = Arr::get($searchParams, 'role', '');
         $keyword = Arr::get($searchParams, 'keyword', '');
-
+        
         if (!empty($role)) {
             $userQuery->whereHas('roles', function($q) use ($role) { $q->where('name', $role); });
+           
         }
-
+        
         if (!empty($keyword)) {
             $userQuery->where('name', 'LIKE', '%' . $keyword . '%');
             $userQuery->where('email', 'LIKE', '%' . $keyword . '%');
+            
         }
-
+       
         return UserResource::collection($userQuery->paginate($limit));
     }
 
@@ -216,6 +218,7 @@ class UserController extends Controller
      */
     private function getValidationRules($isNew = true)
     {
+
         return [
             'name' => 'required',
             'email' => $isNew ? 'required|email|unique:users' : 'required|email',
