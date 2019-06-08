@@ -38,16 +38,10 @@
                 </template>
             </el-table-column>
 
-            <!-- <el-table-column align="center" label="Role" width="120">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.roles.join(', ') }}</span>
-                </template>
-            </el-table-column> -->
-
             <el-table-column align="center" label="Actions" width="350">
                 <template slot-scope="scope">
-                    <router-link :to="'/administrator/users/edit/'+scope.row.id">
-                        <el-button type="primary" size="small" icon="el-icon-edit" v-permission="['manage user']">
+                    <router-link :to="'/clients/edit/'+scope.row.id">
+                        <el-button type="primary" size="small" icon="el-icon-edit">
                             Edit
                         </el-button>
                     </router-link>
@@ -98,27 +92,39 @@
             </div>
         </el-dialog>
 
-        <el-dialog :title="'Create new user'" :visible.sync="dialogFormVisible">
+        <el-dialog :title="'Create new client'" :visible.sync="dialogFormVisible">
             <div class="form-container" v-loading="userCreating">
                 <el-form ref="userForm" :rules="rules" :model="newUser" label-position="left" label-width="150px"
                     style="max-width: 500px;">
-                    <!-- <el-form-item :label="$t('user.role')" prop="role">
-                        <el-select v-model="newUser.role" class="filter-item" placeholder="Please select role">
-                            <el-option v-for="item in nonAdminRoles" :key="item" :label="item | uppercaseFirst"
-                                :value="item" />
-                        </el-select>
-                    </el-form-item> -->
                     <el-form-item :label="$t('user.name')" prop="name">
                         <el-input v-model="newUser.name" />
                     </el-form-item>
                     <el-form-item :label="$t('user.email')" prop="email">
                         <el-input v-model="newUser.email" />
                     </el-form-item>
-                    <el-form-item :label="$t('user.password')" prop="password">
-                        <el-input v-model="newUser.password" show-password />
+                    <el-form-item :label="$t('user.company')" prop="company">
+                        <el-input v-model="newUser.company" />
                     </el-form-item>
-                    <el-form-item :label="$t('user.confirmPassword')" prop="confirmPassword">
-                        <el-input v-model="newUser.confirmPassword" show-password />
+                    <el-form-item :label="$t('user.phone')" prop="phone">
+                        <el-input v-model="newUser.phone" />
+                    </el-form-item>
+                    <el-form-item :label="$t('user.open_balance')" prop="open_balance">
+                        <el-input v-model="newUser.open_balance" />
+                    </el-form-item>
+                    <el-form-item :label="$t('user.fax')" prop="fax">
+                        <el-input v-model="newUser.fax" />
+                    </el-form-item>
+                    <el-form-item :label="$t('user.website')" prop="website">
+                        <el-input v-model="newUser.website" />
+                    </el-form-item>
+                    <el-form-item :label="$t('user.billing_address')" prop="billing_address">
+                        <el-input v-model="newUser.billing_address" />
+                    </el-form-item>
+                    <el-form-item :label="$t('user.shipping_address')" prop="shipping_address">
+                        <el-input v-model="newUser.shipping_address" />
+                    </el-form-item>
+                    <el-form-item :label="$t('user.note')" prop="note">
+                        <el-input v-model="newUser.note" />
                     </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
@@ -188,6 +194,13 @@ export default {
           { required: true, message: 'Email is required', trigger: 'blur' },
           { type: 'email', message: 'Please input correct email address', trigger: ['blur', 'change'] },
         ],
+        company: [{ required: true, message: 'Company is required', trigger: 'blur' }],
+        phone: [{ required: true, message: 'Phone is required', trigger: 'blur' }],
+        open_balance: [{ required: true, message: 'Open Balance is required', trigger: 'blur' }],
+        fax: [{ required: true, message: 'Fax is required', trigger: 'blur' }],
+        website: [{ required: true, message: 'Website is required', trigger: 'blur' }],
+        billing_address: [{ required: true, message: 'Billing address is required', trigger: 'blur' }],
+        shipping_address: [{ required: true, message: 'Shipping address is required', trigger: 'blur' }],
         password: [{ required: true, message: 'Password is required', trigger: 'blur' }],
         confirmPassword: [{ validator: validateConfirmPassword, trigger: 'blur' }],
       },
@@ -375,6 +388,13 @@ export default {
       this.newUser = {
         name: '',
         email: '',
+        company: '',
+        phone: '',
+        open_balance: '',
+        fax: '',
+        website: '',
+        billing_address: '',
+        shipping_address: '',
         password: '',
         confirmPassword: '',
         role: 'user',

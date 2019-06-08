@@ -18,6 +18,14 @@ class ClientResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'company' => $this->company,
+            'phone' => $this->phone,
+            'open_balance' => $this->open_balance,
+            'fax' => $this->fax,
+            'website' => $this->website,
+            'billing_address' => $this->billing_address,
+            'shipping_address'=> $this->shipping_address,
+            'note' => $this->note
             // 'roles' => array_map(function ($role) {
             //     return $role['name'];
             // }, $this->roles->toArray()),

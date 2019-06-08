@@ -68,27 +68,21 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         //
-        $client = Client::create([
-            'name' => $request->input('name'),
-            'company' => $request->input('company_name'),
-            'phone' => $request->input('phone'),
-            'fax' => $request->input('fax'),
-            'email' => $request->input('email'),
-            'website' => $request->input('website'),
-            'billing_address' => $request->input('b_address'),
-            'shipping_address' => $request->input('s_address'),
-            'note' => $request->input('note')
+        sleep(1);
+        $params = $request->all();
+        $user = Client::create([
+            'name' => $params['name'],
+            'email' => $params['email'],
+            'company' => $params['company'],
+            'phone' => $params['phone'],
+            'open_balance' => $params['open_balance'],
+            'fax' => $params['fax'],
+            'website' => $params['website'],
+            'billing_address' => $params['billing_address'],
+            'shipping_address' => $params['shipping_address'],
+            'note' => $params['note'],
         ]);
-        if($client){
-            flash()->success('Client Inserted Successfully!');
-            // Session::flash('success', 'Client Inserted Successfully!');
-        }else{
-            flash()->error('Something went wrong!');
-            // Session::flash('failure', 'Something went wrong!');
-        }
-        $clients = Client::all();
-
-        return redirect()->route('client.index',['clients'=>$clients]);
+        return new ClientResource($user);
     }
 
     public function downloadClientSample(){
@@ -178,6 +172,8 @@ class ClientController extends Controller
     public function show(Client $client)
     {
         //
+        //return response()->json($client);
+        return new ClientResource($client);
         $client = Client::where('id',$client->id)->get();
         return response()->json(['client'=>$client]);
     }
@@ -191,6 +187,7 @@ class ClientController extends Controller
     public function edit(Client $client)
     {
         //
+        return new ClientResource($user);
         $data = Client::where('id',$client->id)->get();
         return response()->json(['client'=>$data]);
     }
@@ -236,21 +233,28 @@ class ClientController extends Controller
     public function destroy(Client $client)
     {
         //
-    }
-
-    public function delete(Client $client)
-    {
-        $data = Client::find($client->id);
-        $data->delete();
-        if($data){
-            flash()->success('Clients Data Deleted!');
-            // Session::flash('success', 'Clients Data Deleted!');
-        }else{
-            flash()->error('Something went wrong!');
-            // Session::flash('failure', 'Something went wrong!');
+        try {
+            $client->delete();
+        } catch (\Exception $ex) {
+            response()->json(['error' => $ex->getMessage()], 403);
         }
-        $clients = Client::all();
-        return redirect()->route('client.index',['clients'=>$clients]);    
 
+        return response()->json(null, 204);
     }
+
+    // public function delete(Client $client)
+    // {
+    //     $data = Client::find($client->id);
+    //     $data->delete();
+    //     if($data){
+    //         flash()->success('Clients Data Deleted!');
+    //         // Session::flash('success', 'Clients Data Deleted!');
+    //     }else{
+    //         flash()->error('Something went wrong!');
+    //         // Session::flash('failure', 'Something went wrong!');
+    //     }
+    //     $clients = Client::all();
+    //     return redirect()->route('client.index',['clients'=>$clients]);    
+
+    // }
 }

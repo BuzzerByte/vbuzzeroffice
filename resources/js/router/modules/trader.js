@@ -12,13 +12,20 @@ const traderRoutes = {
   },
   children: [
     {
-      path: 'view-client',
+      path: 'clients/edit/:id(\\d+)',
+      component: () => import('@/views/traders/clients/Show'),
+      name: 'ClientProfile',
+      meta: { title: 'clientProfile', noCache: true, permissions: ['manage user'] },
+      hidden: true,
+    },
+    {
+      path: 'clients',
       component: () => import('@/views/traders/clients'),
       name: 'Client',
       meta: { title: 'Client' },
     },
     {
-      path: 'view-vendor',
+      path: 'vendors',
       component: () => import('@/views/traders/vendors'),
       name: 'Vendor',
       meta: { title: 'Vendor' },
