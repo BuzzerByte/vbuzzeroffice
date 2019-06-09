@@ -201,27 +201,57 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        //
-        $update = Client::where('id',$client->id)->update([
-            'name'=>$request->name,
-            'company'=>$request->company_name,
-            'phone'=>$request->phone,
-            'fax'=>$request->fax,
-            'email'=>$request->email,
-            'website'=>$request->website,
-            'billing_address'=>$request->b_address,
-            'shipping_address'=>$request->s_address,
-            'note'=>$request->note
-        ]);
-        if($update){
-            flash()->success('Clients Data Updated!');
-            // Session::flash('success', 'Clients Data Updated!');
-        }else{
-            flash()->error('Something went wrong!');
-            // Session::flash('failure', 'Something went wrong!');
+        if ($client === null) {
+            return response()->json(['error' => 'User not found'], 404);
         }
-        $clients = Client::all();
-        return redirect()->route('client.index',['clients'=>$clients]);    
+        // if ($client->isAdmin()) {
+        //     return response()->json(['error' => 'Admin can not be modified'], 403);
+        // }
+
+        // $validator = Validator::make($request->all(), $this->getValidationRules(false));
+        // if ($validator->fails()) {
+        //     return response()->json(['errors' => $validator->errors()], 403);
+        // } else {
+            $email = $request->get('email');
+            $found = Client::where('email', $email)->first();
+            if ($found && $found->id !== $client->id) {
+                return response()->json(['error' => 'Email has been taken'], 403);
+            }
+
+            $client->name = $request->get('name');
+            $client->email = $email;
+            $client->website = $request->get('website');
+            $client->phone   = $request->get('phone');
+            $client->company = $request->get('company');
+            $client->billing_address = $request->get('billing_address');
+            $client->shipping_address = $request->get('shipping_address');
+            $client->note = $request->get('note');
+            $client->fax = $request->get('fax');
+            $client->open_balance = $request->get('open_balance');
+            $client->save();
+            return new ClientResource($client);
+        // }
+        //
+        // $update = Client::where('id',$client->id)->update([
+        //     'name'=>$request->name,
+        //     'company'=>$request->company_name,
+        //     'phone'=>$request->phone,
+        //     'fax'=>$request->fax,
+        //     'email'=>$request->email,
+        //     'website'=>$request->website,
+        //     'billing_address'=>$request->b_address,
+        //     'shipping_address'=>$request->s_address,
+        //     'note'=>$request->note
+        // ]);
+        // if($update){
+        //     flash()->success('Clients Data Updated!');
+        //     // Session::flash('success', 'Clients Data Updated!');
+        // }else{
+        //     flash()->error('Something went wrong!');
+        //     // Session::flash('failure', 'Something went wrong!');
+        // }
+        // $clients = Client::all();
+        // return redirect()->route('client.index',['clients'=>$clients]);    
     }
 
     /**
@@ -242,6 +272,40 @@ class ClientController extends Controller
         return response()->json(null, 204);
     }
 
+    /**
+     * Get permissions from role
+     *
+     * @param User $user
+     * @return array|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function permissions(User $user)
+    {
+        try {
+            return new JsonResponse([
+                'user' => PermissionResource::collection($user->getDirectPermissions()),
+                'role' => PermissionResource::collection($user->getPermissionsViaRoles()),
+            ]);
+        } catch (\Exception $ex) {
+            response()->json(['error' => $ex->getMessage()], 403);
+        }
+    }
+
+    /**
+     * @param bool $isNew
+     * @return array
+     */
+    private function getValidationRules($isNew = true)
+    {
+
+        return [
+            'name' => 'required',
+            'email' => $isNew ? 'required|email|unique:users' : 'required|email',
+            'roles' => [
+                'required',
+                'array'
+            ],
+        ];
+    }
     // public function delete(Client $client)
     // {
     //     $data = Client::find($client->id);

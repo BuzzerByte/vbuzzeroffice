@@ -15,7 +15,7 @@ const traderRoutes = {
       path: 'clients/edit/:id(\\d+)',
       component: () => import('@/views/traders/clients/Show'),
       name: 'ClientProfile',
-      meta: { title: 'clientProfile', noCache: true, permissions: ['manage user'] },
+      meta: { title: 'Client Profile', noCache: true },
       hidden: true,
     },
     {

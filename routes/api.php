@@ -34,6 +34,7 @@ Route::group(['middleware' => 'api'], function () {
     Route::apiResource('permissions', 'PermissionController')->middleware('permission:' . \App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
 
     Route::apiResource('clients','ClientController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
+    Route::get('clients/{clients}/permissions', 'ClientController@permissions')->middleware('permission:' . \App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
     Route::apiResource('vendors','VendorController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
     Route::apiResource('applications','ApplicationController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
     Route::apiResource('attendances','AttendanceController')->middleware('permission:'.\App\Laravue\Acl::PERMISSION_PERMISSION_MANAGE);
