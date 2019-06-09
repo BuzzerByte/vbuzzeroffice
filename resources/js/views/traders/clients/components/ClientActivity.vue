@@ -163,7 +163,7 @@
 
 <script>
 import Resource from '@/api/resource';
-const userResource = new Resource('users');
+const clientResource = new Resource('clients');
 
 export default {
   props: {
@@ -197,7 +197,7 @@ export default {
     },
     onSubmit() {
       this.updating = true;
-      userResource
+      clientResource
         .update(this.user.id, this.user)
         .then(response => {
           this.updating = false;

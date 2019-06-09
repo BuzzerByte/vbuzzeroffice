@@ -3,11 +3,11 @@
         <el-form :model="user" v-if="user">
           <el-row :gutter="20">
             <el-col :span="6">
-              <user-card :user="user" />
-              <user-bio />
+              <client-card :user="user" />
+              <client-bio />
             </el-col>
             <el-col :span="18">
-              <user-activity :user="user" />
+              <client-activity :user="user" />
             </el-col>
           </el-row>
         </el-form>
@@ -20,7 +20,7 @@ import ClientBio from './components/ClientBio';
 import ClientCard from './components/ClientCard';
 import ClientActivity from './components/ClientActivity';
 
-const userResource = new Resource('users');
+const clientResource = new Resource('clients');
 export default {
   name: 'EditUser',
   components: { ClientBio, ClientCard, ClientActivity },
@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     async getUser(id) {
-      const { data } = await userResource.get(id);
+      const { data } = await clientResource.get(id);
       this.user = data;
     },
   },
