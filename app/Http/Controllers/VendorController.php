@@ -2,8 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PermissionResource;
+use App\Http\Resources\UserResource;
+use App\Http\Resources\VendorResource;
+use App\Laravue\Acl;
+use App\Laravue\JsonResponse;
+use App\Laravue\Models\Permission;
+use App\Laravue\Models\Role;
+use App\Laravue\Models\User;
 use App\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use Validator;
 
 class VendorController extends Controller
 {
@@ -15,12 +29,24 @@ class VendorController extends Controller
     public function index()
     {
         //
-        $vendors = Vendor::all();
-        if(empty($vendors)){
-            return view('admin.vendors.index',['vendors'=>'No Vendor']);
-        }else{
-            return view('admin.vendors.index',['vendors'=>$vendors]);
+        $searchParams = $request->all();
+        $userQuery = Vendor::query();
+        $limit = Arr::get($searchParams, 'limit', static::ITEM_PER_PAGE);
+        $role = Arr::get($searchParams, 'role', '');
+        $keyword = Arr::get($searchParams, 'keyword', '');
+        
+        if (!empty($role)) {
+            $userQuery->whereHas('roles', function($q) use ($role) { $q->where('name', $role); });
+           
         }
+        
+        if (!empty($keyword)) {
+            $userQuery->where('name', 'LIKE', '%' . $keyword . '%');
+            $userQuery->where('email', 'LIKE', '%' . $keyword . '%');
+            
+        }
+       
+        return VendorResource::collection($userQuery->paginate($limit));
     }
 
     /**
