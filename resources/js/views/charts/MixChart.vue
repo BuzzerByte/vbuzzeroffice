@@ -1,6 +1,10 @@
 <template>
   <div class="chart-container">
+<<<<<<< HEAD
     <chart height="100%" width="100%"/>
+=======
+    <chart height="100%" width="100%" />
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
   </div>
 </template>
 

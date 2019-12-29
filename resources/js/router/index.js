@@ -22,7 +22,10 @@ import nestedRoutes from './modules/nested';
 import errorRoutes from './modules/error';
 import excelRoutes from './modules/excel';
 import permissionRoutes from './modules/permission';
+<<<<<<< HEAD
 import traderRoutes from './modules/trader';
+=======
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
 
 /**
  * Sub-menu only appear when children.length>=1
@@ -37,7 +40,12 @@ import traderRoutes from './modules/trader';
 * redirect: noredirect           if `redirect:noredirect` will no redirect in the breadcrumb
 * name:'router-name'             the name is used by <keep-alive> (must set!!!)
 * meta : {
+<<<<<<< HEAD
     roles: ['admin', 'editor']   will control the page roles (you can set multiple roles)
+=======
+    roles: ['admin', 'editor']   Visible for these roles only
+    permissions: ['view menu zip', 'manage user'] Visible for these permissions only
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
     title: 'title'               the name show in sub-menu and breadcrumb (recommend set)
     icon: 'svg-name'             the icon show in the sidebar
     noCache: true                if true, the page will no be cached(default is false)
@@ -71,12 +79,20 @@ export const constantRoutes = [
   {
     path: '/404',
     redirect: { name: 'Page404' },
+<<<<<<< HEAD
     component: () => import('@/views/ErrorPage/404'),
+=======
+    component: () => import('@/views/error-page/404'),
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
     hidden: true,
   },
   {
     path: '/401',
+<<<<<<< HEAD
     component: () => import('@/views/ErrorPage/401'),
+=======
+    component: () => import('@/views/error-page/401'),
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
     hidden: true,
   },
   {
@@ -122,7 +138,10 @@ export const constantRoutes = [
 ];
 
 export const asyncRoutes = [
+<<<<<<< HEAD
   traderRoutes,
+=======
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
   permissionRoutes,
   componentRoutes,
   chartsRoutes,
@@ -206,7 +225,11 @@ export const asyncRoutes = [
     ],
   },
   {
+<<<<<<< HEAD
     path: 'external-link',
+=======
+    path: '/external-link',
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
     component: Layout,
     children: [
       {
@@ -221,6 +244,10 @@ export const asyncRoutes = [
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
+<<<<<<< HEAD
+=======
+  base: process.env.MIX_LARAVUE_PATH,
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
   routes: constantRoutes,
 });
 

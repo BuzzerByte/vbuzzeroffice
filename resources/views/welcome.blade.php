@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <!doctype html>
+=======
+<!DOCTYPE html>
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -7,7 +11,11 @@
         <title>Laravel</title>
 
         <!-- Fonts -->
+<<<<<<< HEAD
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+=======
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
 
         <!-- Styles -->
         <style>
@@ -86,11 +94,19 @@
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>
+<<<<<<< HEAD
+=======
+                    <a href="{{ route('laravue') }}/">Laravue</a>
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
                     <a href="https://laracasts.com">Laracasts</a>
                     <a href="https://laravel-news.com">News</a>
                     <a href="https://blog.laravel.com">Blog</a>
                     <a href="https://nova.laravel.com">Nova</a>
                     <a href="https://forge.laravel.com">Forge</a>
+<<<<<<< HEAD
+=======
+                    <a href="https://vapor.laravel.com">Vapor</a>
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
             </div>

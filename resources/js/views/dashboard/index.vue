@@ -1,6 +1,10 @@
 <template>
   <div class="dashboard-container">
+<<<<<<< HEAD
     <component :is="currentRole"/>
+=======
+    <component :is="currentRole" />
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
   </div>
 </template>
 

@@ -12,7 +12,13 @@ try {
   window.$ = window.jQuery = require('jquery');
 
   require('bootstrap');
+<<<<<<< HEAD
 } catch (e) {}
+=======
+} catch (e) {
+  console.log(e);
+}
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -44,7 +50,11 @@ if (token) {
  * allows your team to easily build robust real-time web applications.
  */
 
+<<<<<<< HEAD
 // import Echo from 'laravel-echo'
+=======
+// import Echo from 'laravel-echo';
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
 
 // window.Pusher = require('pusher-js');
 

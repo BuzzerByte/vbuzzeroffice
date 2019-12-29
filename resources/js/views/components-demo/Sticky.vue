@@ -3,11 +3,19 @@
     <sticky class-name="sub-navbar">
       <el-dropdown trigger="click">
         <el-button plain>
+<<<<<<< HEAD
           Platform<i class="el-icon-caret-bottom el-icon--right"/>
         </el-button>
         <el-dropdown-menu slot="dropdown" class="no-border">
           <el-checkbox-group v-model="platforms" style="padding: 5px 15px;">
             <el-checkbox v-for="item in platformsOptions" :label="item.key" :key="item.key">
+=======
+          Platform<i class="el-icon-caret-bottom el-icon--right" />
+        </el-button>
+        <el-dropdown-menu slot="dropdown" class="no-border">
+          <el-checkbox-group v-model="platforms" style="padding: 5px 15px;">
+            <el-checkbox v-for="item in platformsOptions" :key="item.key" :label="item.key">
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
               {{ item.name }}
             </el-checkbox>
           </el-checkbox-group>
@@ -16,20 +24,38 @@
 
       <el-dropdown trigger="click">
         <el-button plain>
+<<<<<<< HEAD
           Link<i class="el-icon-caret-bottom el-icon--right"/>
         </el-button>
         <el-dropdown-menu slot="dropdown" class="no-padding no-border" style="width:300px">
           <el-input v-model="url" placeholder="Please enter the content">
             <template slot="prepend">Url</template>
+=======
+          Link<i class="el-icon-caret-bottom el-icon--right" />
+        </el-button>
+        <el-dropdown-menu slot="dropdown" class="no-padding no-border" style="width:300px">
+          <el-input v-model="url" placeholder="Please enter the content">
+            <template slot="prepend">
+              Url
+            </template>
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
           </el-input>
         </el-dropdown-menu>
       </el-dropdown>
 
       <div class="time-container">
+<<<<<<< HEAD
         <el-date-picker v-model="time" :picker-options="pickerOptions" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="Release time"/>
       </div>
 
       <el-button style="margin-left: 10px;" type="success">publish
+=======
+        <el-date-picker v-model="time" :picker-options="pickerOptions" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="Release time" />
+      </div>
+
+      <el-button style="margin-left: 10px;" type="success">
+        publish
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
       </el-button>
     </sticky>
 
@@ -49,7 +75,13 @@
       <div>placeholder</div>
       <div>placeholder</div>
       <sticky :sticky-top="200">
+<<<<<<< HEAD
         <el-button type="primary"> placeholder</el-button>
+=======
+        <el-button type="primary">
+          placeholder
+        </el-button>
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
       </sticky>
       <div>placeholder</div>
       <div>placeholder</div>

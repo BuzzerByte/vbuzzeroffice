@@ -1,5 +1,9 @@
 <template>
+<<<<<<< HEAD
   <div :class="className" :style="{height:height,width:width}"/>
+=======
+  <div :class="className" :style="{height:height,width:width}" />
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
 </template>
 
 <script>

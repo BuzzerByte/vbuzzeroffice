@@ -10,7 +10,11 @@ NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
 const whiteList = ['/login', '/auth-redirect']; // no redirect whitelist
 
+<<<<<<< HEAD
 router.beforeEach(async (to, from, next) => {
+=======
+router.beforeEach(async(to, from, next) => {
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
   // start progress bar
   NProgress.start();
   // set page title
@@ -57,7 +61,11 @@ router.beforeEach(async (to, from, next) => {
   } else {
     /* has no token*/
 
+<<<<<<< HEAD
     if (whiteList.indexOf(to.path) !== -1) {
+=======
+    if (whiteList.indexOf(to.matched[0] ? to.matched[0].path : '') !== -1) {
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
       // in the free login whitelist, go directly
       next();
     } else {

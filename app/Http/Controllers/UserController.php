@@ -11,7 +11,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\PermissionResource;
 use App\Http\Resources\UserResource;
-use App\Laravue\Acl;
 use App\Laravue\JsonResponse;
 use App\Laravue\Models\Permission;
 use App\Laravue\Models\Role;
@@ -19,9 +18,7 @@ use App\Laravue\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
 use Validator;
 
 /**
@@ -46,18 +43,16 @@ class UserController extends Controller
         $limit = Arr::get($searchParams, 'limit', static::ITEM_PER_PAGE);
         $role = Arr::get($searchParams, 'role', '');
         $keyword = Arr::get($searchParams, 'keyword', '');
-        
+
         if (!empty($role)) {
             $userQuery->whereHas('roles', function($q) use ($role) { $q->where('name', $role); });
-           
         }
-        
+
         if (!empty($keyword)) {
             $userQuery->where('name', 'LIKE', '%' . $keyword . '%');
             $userQuery->where('email', 'LIKE', '%' . $keyword . '%');
-            
         }
-       
+
         return UserResource::collection($userQuery->paginate($limit));
     }
 
@@ -69,7 +64,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        sleep(1);
         $validator = Validator::make(
             $request->all(),
             array_merge(
@@ -218,7 +212,6 @@ class UserController extends Controller
      */
     private function getValidationRules($isNew = true)
     {
-
         return [
             'name' => 'required',
             'email' => $isNew ? 'required|email|unique:users' : 'required|email',

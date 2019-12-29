@@ -1,6 +1,11 @@
 <template>
   <div class="components-container">
+<<<<<<< HEAD
     <aside>This is based on
+=======
+    <aside>
+      This is based on
+>>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
       <a class="link-type" href="//github.com/dai-siki/vue-image-crop-upload"> vue-image-crop-upload</a>.
       {{ $t('components.imageUploadTips') }}
     </aside>
