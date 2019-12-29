@@ -4,13 +4,9 @@
       <h3>{{ list1Title }}</h3>
       <draggable :list="list1" :options="{group:'article'}" class="dragArea">
         <div v-for="element in list1" :key="element.id" class="list-complete-item">
-<<<<<<< HEAD
-          <div class="list-complete-item-handle">{{ element.id }}[{{ element.author }}] {{ element.title }}</div>
-=======
           <div class="list-complete-item-handle">
             {{ element.id }}[{{ element.author }}] {{ element.title }}
           </div>
->>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
           <div style="position:absolute;right:0px;">
             <span style="float: right ;margin-top: -20px;margin-right:5px;" @click="deleteEle(element)">
               <i style="color:#ff4949" class="el-icon-delete" />
@@ -23,13 +19,9 @@
       <h3>{{ list2Title }}</h3>
       <draggable :list="list2" :options="{group:'article'}" class="dragArea">
         <div v-for="element in list2" :key="element.id" class="list-complete-item">
-<<<<<<< HEAD
-          <div class="list-complete-item-handle2" @click="pushEle(element)">{{ element.id }} [{{ element.author }}] {{ element.title }}</div>
-=======
           <div class="list-complete-item-handle2" @click="pushEle(element)">
             {{ element.id }} [{{ element.author }}] {{ element.title }}
           </div>
->>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
         </div>
       </draggable>
     </div>

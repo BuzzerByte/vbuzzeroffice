@@ -5,13 +5,9 @@
       <a href="https://github.com/kamranahmedse/driver.js" target="_blank">driver.js.
       </a>
     </p>
-<<<<<<< HEAD
-    <el-button icon="el-icon-question" type="primary" @click.prevent.stop="guide">{{ $t('guide.button') }}</el-button>
-=======
     <el-button icon="el-icon-question" type="primary" @click.prevent.stop="guide">
       {{ $t('guide.button') }}
     </el-button>
->>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
   </div>
 </template>
 

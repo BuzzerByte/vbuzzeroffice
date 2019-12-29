@@ -5,12 +5,8 @@
       align="center"
       label="ID"
       width="65"
-<<<<<<< HEAD
-      element-loading-text="Pleas be patient！">
-=======
       element-loading-text="Pleas be patient！"
     >
->>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
       <template slot-scope="scope">
         <span>{{ scope.row.id }}</span>
       </template>
@@ -37,11 +33,7 @@
 
     <el-table-column width="120px" label="Importance">
       <template slot-scope="scope">
-<<<<<<< HEAD
-        <svg-icon v-for="n in +scope.row.importance" :key="n" icon-class="star"/>
-=======
         <svg-icon v-for="n in +scope.row.importance" :key="n" icon-class="star" />
->>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
       </template>
     </el-table-column>
 
@@ -58,10 +50,6 @@
         </el-tag>
       </template>
     </el-table-column>
-<<<<<<< HEAD
-
-=======
->>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
   </el-table>
 </template>
 

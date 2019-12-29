@@ -2,11 +2,7 @@
   <div class="components-container">
     <code>JsonEditor is base on  <a href="https://github.com/codemirror/CodeMirror" target="_blank">CodeMirrorr</a> , lint base on json-lint </code>
     <div class="editor-container">
-<<<<<<< HEAD
-      <json-editor ref="jsonEditor" v-model="value"/>
-=======
       <json-editor ref="jsonEditor" v-model="value" />
->>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
     </div>
   </div>
 </template>

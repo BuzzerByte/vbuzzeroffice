@@ -1,12 +1,6 @@
 <template>
   <div class="app-container">
-<<<<<<< HEAD
-
     <div style="margin-bottom:20px;">
-
-=======
-    <div style="margin-bottom:20px;">
->>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
       <el-button type="primary" size="small" class="option-item">
         <a href="https://github.com/tuandm/laravue/tree/master/src/components/TreeTable" target="_blank">Documentation</a>
       </el-button>
@@ -29,10 +23,6 @@
           inactive-color="#ff4949"
         />
       </div>
-<<<<<<< HEAD
-
-=======
->>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
     </div>
 
     <tree-table :key="key" :default-expand-all="defaultExpandAll" :data="data" :columns="columns" border>
@@ -42,18 +32,11 @@
         <el-tag>select: {{ scope.row._select }}</el-tag>
       </template>
       <template slot="operation" slot-scope="{scope}">
-<<<<<<< HEAD
-        <el-button type="primary" size="" @click="click(scope)">Click</el-button>
-      </template>
-    </tree-table>
-
-=======
         <el-button type="primary" size="" @click="click(scope)">
           Click
         </el-button>
       </template>
     </tree-table>
->>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
   </div>
 </template>
 

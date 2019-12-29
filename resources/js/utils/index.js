@@ -261,11 +261,7 @@ export function getTime(type) {
 export function debounce(func, wait, immediate) {
   let timeout, args, context, timestamp, result;
 
-<<<<<<< HEAD
-  const later = function () {
-=======
   const later = function() {
->>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
     // According to the last trigger interval
     const last = new Date().getTime() - timestamp;
 
@@ -284,11 +280,7 @@ export function debounce(func, wait, immediate) {
     }
   };
 
-<<<<<<< HEAD
-  return function (...args) {
-=======
   return function(...args) {
->>>>>>> e4f5078caabc533ff96e7c2a910b55e0a2db0278
     context = this;
     timestamp = new Date().getTime();
     const callNow = immediate && !timeout;
