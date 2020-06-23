@@ -6,11 +6,11 @@ networks:
 services:
   nginx:
     image: nginx:stable-alpine
-    container_name: nginx
+    container_name: vbuzzeroffice_nginx
     ports:
       - "8080:80"
     volumes:
-      - ./src:/var/www/html
+      - ./:/var/www/html
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
@@ -20,7 +20,7 @@ services:
 
   mysql:
     image: mysql:5.7.29
-    container_name: mysql
+    container_name: vbuzzeroffice_mysql
     restart: unless-stopped
     tty: true
     ports:
@@ -39,9 +39,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: php
+    container_name: vbuzzeroffice_php
     volumes:
-      - ./src:/var/www/html
+      - ./:/var/www/html
     ports:
       - "9000:9000"
     networks:
@@ -49,9 +49,9 @@ services:
 
   composer:
     image: composer:latest
-    container_name: composer
+    container_name: vbuzzeroffice_composer
     volumes:
-      - ./src:/var/www/html
+      - ./:/var/www/html
     working_dir: /var/www/html
     depends_on:
       - php
@@ -60,9 +60,9 @@ services:
 
   npm:
     image: node:13.7
-    container_name: npm
+    container_name: vbuzzeroffice_npm
     volumes:
-      - ./src:/var/www/html
+      - ./:/var/www/html
     working_dir: /var/www/html
     entrypoint: ['npm']
 
@@ -70,9 +70,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: artisan
+    container_name: vbuzzeroffice_artisan
     volumes:
-      - ./src:/var/www/html
+      - ./:/var/www/html
     depends_on:
       - mysql
     working_dir: /var/www/html
