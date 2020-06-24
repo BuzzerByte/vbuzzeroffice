@@ -22,7 +22,6 @@ import nestedRoutes from './modules/nested';
 import errorRoutes from './modules/error';
 import excelRoutes from './modules/excel';
 import permissionRoutes from './modules/permission';
-import traderRoutes from './modules/trader';
 
 /**
  * Sub-menu only appear when children.length>=1
@@ -107,6 +106,19 @@ export const constantRoutes = [
     ],
   },
   {
+    path: '/profile',
+    component: Layout,
+    redirect: '/profile/edit',
+    children: [
+      {
+        path: 'edit',
+        component: () => import('@/views/users/SelfProfile'),
+        name: 'SelfProfile',
+        meta: { title: 'userProfile', icon: 'user', noCache: true },
+      },
+    ],
+  },
+  {
     path: '/guide',
     component: Layout,
     redirect: '/guide/index',
@@ -123,7 +135,6 @@ export const constantRoutes = [
 ];
 
 export const asyncRoutes = [
-  traderRoutes,
   permissionRoutes,
   componentRoutes,
   chartsRoutes,
