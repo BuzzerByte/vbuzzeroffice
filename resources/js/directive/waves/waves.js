@@ -69,7 +69,7 @@ export default {
     el.addEventListener('click', handleClick(el, binding), false);
   },
   update(el, binding) {
-    el.removeEventListener('click', el[context].removeHandle, true);
+    el.removeEventListener('click', el[context].removeHandle, false);
     el.addEventListener('click', handleClick(el, binding), false);
   },
   unbind(el) {

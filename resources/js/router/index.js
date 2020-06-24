@@ -22,6 +22,7 @@ import nestedRoutes from './modules/nested';
 import errorRoutes from './modules/error';
 import excelRoutes from './modules/excel';
 import permissionRoutes from './modules/permission';
+import traderRoutes from './modules/trader';
 
 /**
  * Sub-menu only appear when children.length>=1
@@ -135,6 +136,7 @@ export const constantRoutes = [
 ];
 
 export const asyncRoutes = [
+  traderRoutes,
   permissionRoutes,
   componentRoutes,
   chartsRoutes,
