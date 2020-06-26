@@ -33,7 +33,6 @@ class AuthController extends BaseController
         }
 
         $user = $request->user();
-
         return response()->json(new JsonResponse(new UserResource($user)), Response::HTTP_OK);
     }
 

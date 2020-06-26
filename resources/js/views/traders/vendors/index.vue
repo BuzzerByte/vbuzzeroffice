@@ -1,140 +1,190 @@
 <template>
-    <div class="app-container">
-        <div class="filter-container">
-            <el-input v-model="query.keyword" :placeholder="$t('table.keyword')" style="width: 200px;"
-                class="filter-item" @keyup.enter.native="handleFilter" />
-            <el-select v-model="query.role" :placeholder="$t('table.role')" clearable style="width: 90px"
-                class="filter-item" @change="handleFilter">
-                <el-option v-for="item in roles" :key="item" :label="item | uppercaseFirst" :value="item" />
-            </el-select>
-            <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-                {{ $t('table.search') }}
-            </el-button>
-            <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus"
-                @click="handleCreate">
-                {{ $t('table.add') }}
-            </el-button>
-            <el-button v-waves :loading="downloading" class="filter-item" type="primary" icon="el-icon-download"
-                @click="handleDownload">
-                {{ $t('table.export') }}
-            </el-button>
-        </div>
-        <el-table v-loading="loading" :data="list" border fit highlight-current-row style="width: 100%">
-            <el-table-column align="center" label="ID" width="80">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.index }}</span>
-                </template>
-            </el-table-column>
-
-            <el-table-column align="center" label="Name">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.name }}</span>
-                </template>
-            </el-table-column>
-
-            <el-table-column align="center" label="Email">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.email }}</span>
-                </template>
-            </el-table-column>
-
-            <el-table-column align="center" label="Actions" width="350">
-                <template slot-scope="scope">
-                    <router-link :to="'/trader/vendors/edit/'+scope.row.id">
-                        <el-button type="primary" size="small" icon="el-icon-edit">
-                            Edit
-                        </el-button>
-                    </router-link>
-                    <el-button type="warning" size="small" icon="el-icon-edit"
-                        v-permission="['manage permission']" @click="handleEditPermissions(scope.row.id);">
-                        Permissions
-                    </el-button>
-                    <el-button type="danger" size="small" icon="el-icon-delete" v-permission="['manage user']"
-                         @click="handleDelete(scope.row.id, scope.row.name);">
-                        Delete
-                    </el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-
-        <pagination v-show="total>0" :total="total" :page.sync="query.page" :limit.sync="query.limit" @pagination="getList"/>
-        <el-dialog :visible.sync="dialogPermissionVisible" :title="'Edit Permissions - ' + currentUser.name">
-            <div class="form-container" v-loading="dialogPermissionLoading" v-if="currentUser.name">
-                <div class="permissions-container">
-                    <div class="block">
-                        <el-form :model="currentUser" label-width="80px" label-position="top">
-                            <el-form-item label="Menus">
-                                <el-tree ref="menuPermissions" :data="normalizedMenuPermissions"
-                                    :default-checked-keys="permissionKeys(userMenuPermissions)" :props="permissionProps"
-                                    show-checkbox node-key="id" class="permission-tree" />
-                            </el-form-item>
-                        </el-form>
-                    </div>
-                    <div class="block">
-                        <el-form :model="currentUser" label-width="80px" label-position="top">
-                            <el-form-item label="Permissions">
-                                <el-tree ref="otherPermissions" :data="normalizedOtherPermissions"
-                                    :default-checked-keys="permissionKeys(userOtherPermissions)"
-                                    :props="permissionProps" show-checkbox node-key="id" class="permission-tree" />
-                            </el-form-item>
-                        </el-form>
-                    </div>
-                    <div class="clear-left"></div>
-                </div>
-                <div style="text-align:right;">
-                    <el-button type="danger" @click="dialogPermissionVisible=false">
-                        {{ $t('permission.cancel') }}
-                    </el-button>
-                    <el-button type="primary" @click="confirmPermission">
-                        {{ $t('permission.confirm') }}
-                    </el-button>
-                </div>
-            </div>
-        </el-dialog>
-
-        <el-dialog :title="'Create new vendor'" :visible.sync="dialogFormVisible">
-            <div class="form-container" v-loading="userCreating">
-                <el-form ref="userForm" :rules="rules" :model="newUser" label-position="left" label-width="150px"
-                    style="max-width: 500px;">
-                    <el-form-item :label="$t('user.name')" prop="name">
-                        <el-input v-model="newUser.name" />
-                    </el-form-item>
-                    <el-form-item :label="$t('user.email')" prop="email">
-                        <el-input v-model="newUser.email" />
-                    </el-form-item>
-                    <el-form-item :label="$t('user.company')" prop="company">
-                        <el-input v-model="newUser.company" />
-                    </el-form-item>
-                    <el-form-item :label="$t('user.phone')" prop="phone">
-                        <el-input v-model="newUser.phone" />
-                    </el-form-item>
-                    <el-form-item :label="$t('user.open_balance')" prop="open_balance">
-                        <el-input v-model="newUser.open_balance" />
-                    </el-form-item>
-                    <el-form-item :label="$t('user.fax')" prop="fax">
-                        <el-input v-model="newUser.fax" />
-                    </el-form-item>
-                    <el-form-item :label="$t('user.website')" prop="website">
-                        <el-input v-model="newUser.website" />
-                    </el-form-item>
-                    <el-form-item :label="$t('user.billing_address')" prop="billing_address">
-                        <el-input v-model="newUser.billing_address" />
-                    </el-form-item>
-                    <el-form-item :label="$t('user.note')" prop="note">
-                        <el-input v-model="newUser.note" />
-                    </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="dialogFormVisible = false">
-                        {{ $t('table.cancel') }}
-                    </el-button>
-                    <el-button type="primary" @click="createUser()">
-                        {{ $t('table.confirm') }}
-                    </el-button>
-                </div>
-            </div>
-        </el-dialog>
+  <div class="app-container">
+    <div class="filter-container">
+      <el-input
+        v-model="query.keyword"
+        :placeholder="$t('table.keyword')"
+        style="width: 200px;"
+        class="filter-item"
+        @keyup.enter.native="handleFilter"
+      />
+      <el-select
+        v-model="query.role"
+        :placeholder="$t('table.role')"
+        clearable
+        style="width: 90px"
+        class="filter-item"
+        @change="handleFilter"
+      >
+        <el-option v-for="item in roles" :key="item" :label="item | uppercaseFirst" :value="item" />
+      </el-select>
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+        {{ $t('table.search') }}
+      </el-button>
+      <el-button
+        class="filter-item"
+        style="margin-left: 10px;"
+        type="primary"
+        icon="el-icon-plus"
+        @click="handleCreate"
+      >
+        {{ $t('table.add') }}
+      </el-button>
+      <el-button
+        v-waves
+        :loading="downloading"
+        class="filter-item"
+        type="primary"
+        icon="el-icon-download"
+        @click="handleDownload"
+      >
+        {{ $t('table.export') }}
+      </el-button>
     </div>
+    <el-table v-loading="loading" :data="list" border fit highlight-current-row style="width: 100%">
+      <el-table-column align="center" label="ID" width="80">
+        <template slot-scope="scope">
+          <span>{{ scope.row.index }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="Name">
+        <template slot-scope="scope">
+          <span>{{ scope.row.name }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="Email">
+        <template slot-scope="scope">
+          <span>{{ scope.row.email }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="Actions" width="350">
+        <template slot-scope="scope">
+          <router-link :to="'/trader/vendors/edit/'+scope.row.id">
+            <el-button type="primary" size="small" icon="el-icon-edit">
+              Edit
+            </el-button>
+          </router-link>
+          <el-button
+            v-permission="['manage permission']"
+            type="warning"
+            size="small"
+            icon="el-icon-edit"
+            @click="handleEditPermissions(scope.row.id);"
+          >
+            Permissions
+          </el-button>
+          <el-button
+            v-permission="['manage user']"
+            type="danger"
+            size="small"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row.id, scope.row.name);"
+          >
+            Delete
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <pagination v-show="total>0" :total="total" :page.sync="query.page" :limit.sync="query.limit" @pagination="getList" />
+    <el-dialog :visible.sync="dialogPermissionVisible" :title="'Edit Permissions - ' + currentUser.name">
+      <div v-if="currentUser.name" v-loading="dialogPermissionLoading" class="form-container">
+        <div class="permissions-container">
+          <div class="block">
+            <el-form :model="currentUser" label-width="80px" label-position="top">
+              <el-form-item label="Menus">
+                <el-tree
+                  ref="menuPermissions"
+                  :data="normalizedMenuPermissions"
+                  :default-checked-keys="permissionKeys(userMenuPermissions)"
+                  :props="permissionProps"
+                  show-checkbox
+                  node-key="id"
+                  class="permission-tree"
+                />
+              </el-form-item>
+            </el-form>
+          </div>
+          <div class="block">
+            <el-form :model="currentUser" label-width="80px" label-position="top">
+              <el-form-item label="Permissions">
+                <el-tree
+                  ref="otherPermissions"
+                  :data="normalizedOtherPermissions"
+                  :default-checked-keys="permissionKeys(userOtherPermissions)"
+                  :props="permissionProps"
+                  show-checkbox
+                  node-key="id"
+                  class="permission-tree"
+                />
+              </el-form-item>
+            </el-form>
+          </div>
+          <div class="clear-left" />
+        </div>
+        <div style="text-align:right;">
+          <el-button type="danger" @click="dialogPermissionVisible=false">
+            {{ $t('permission.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="confirmPermission">
+            {{ $t('permission.confirm') }}
+          </el-button>
+        </div>
+      </div>
+    </el-dialog>
+
+    <el-dialog :title="'Create new vendor'" :visible.sync="dialogFormVisible">
+      <div v-loading="userCreating" class="form-container">
+        <el-form
+          ref="userForm"
+          :rules="rules"
+          :model="newUser"
+          label-position="left"
+          label-width="150px"
+          style="max-width: 500px;"
+        >
+          <el-form-item :label="$t('user.name')" prop="name">
+            <el-input v-model="newUser.name" />
+          </el-form-item>
+          <el-form-item :label="$t('user.email')" prop="email">
+            <el-input v-model="newUser.email" />
+          </el-form-item>
+          <el-form-item :label="$t('user.company')" prop="company">
+            <el-input v-model="newUser.company" />
+          </el-form-item>
+          <el-form-item :label="$t('user.phone')" prop="phone">
+            <el-input v-model="newUser.phone" />
+          </el-form-item>
+          <el-form-item :label="$t('user.open_balance')" prop="open_balance">
+            <el-input v-model="newUser.open_balance" />
+          </el-form-item>
+          <el-form-item :label="$t('user.fax')" prop="fax">
+            <el-input v-model="newUser.fax" />
+          </el-form-item>
+          <el-form-item :label="$t('user.website')" prop="website">
+            <el-input v-model="newUser.website" />
+          </el-form-item>
+          <el-form-item :label="$t('user.billing_address')" prop="billing_address">
+            <el-input v-model="newUser.billing_address" />
+          </el-form-item>
+          <el-form-item :label="$t('user.note')" prop="note">
+            <el-input v-model="newUser.note" />
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">
+            {{ $t('table.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="createUser()">
+            {{ $t('table.confirm') }}
+          </el-button>
+        </div>
+      </div>
+    </el-dialog>
+  </div>
 </template>
 
 <script>

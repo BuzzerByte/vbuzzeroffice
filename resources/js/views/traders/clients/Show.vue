@@ -1,54 +1,54 @@
 <template>
   <div class="app-container">
     <!-- <el-form :model="client" v-if="client"> -->
-    <el-form :model="client" v-if="client" label-width="120px" v-loading="updating">
+    <el-form v-if="client" v-loading="updating" :model="client" label-width="120px">
       <el-form-item label="">
         <el-col :span="11">
-           <el-form-item label="Name">
-              <el-input v-model="client.name"/>
-            </el-form-item>
+          <el-form-item label="Name">
+            <el-input v-model="client.name" />
+          </el-form-item>
         </el-col>
         <el-col :span="11">
           <el-form-item label="Email">
-              <el-input v-model="client.email"/>
-            </el-form-item>
+            <el-input v-model="client.email" />
+          </el-form-item>
         </el-col>
       </el-form-item>
       <el-form-item label="">
         <el-col :span="11">
           <el-form-item label="Company">
-            <el-input v-model="client.company"/>
+            <el-input v-model="client.company" />
           </el-form-item>
         </el-col>
         <el-col :span="11">
           <el-form-item label="Phone">
-            <el-input v-model="client.phone"/>
+            <el-input v-model="client.phone" />
           </el-form-item>
         </el-col>
       </el-form-item>
       <el-form-item label="">
         <el-col :span="11">
           <el-form-item label="Open Balance">
-            <el-input v-model="client.open_balance"/>
+            <el-input v-model="client.open_balance" />
           </el-form-item>
         </el-col>
         <el-col :span="11">
           <el-form-item label="Fax">
-            <el-input v-model="client.fax"/>
+            <el-input v-model="client.fax" />
           </el-form-item>
         </el-col>
       </el-form-item>
       <el-form-item label="Website">
-        <el-input v-model="client.website"/>
+        <el-input v-model="client.website" />
       </el-form-item>
       <el-form-item label="Shipping Address">
-        <el-input v-model="client.shipping_address" type="textarea"/>
+        <el-input v-model="client.shipping_address" type="textarea" />
       </el-form-item>
       <el-form-item label="Billing Address">
-        <el-input v-model="client.billing_address" type="textarea"/>
+        <el-input v-model="client.billing_address" type="textarea" />
       </el-form-item>
       <el-form-item label="Note">
-        <el-input v-model="client.note" type="textarea"/>
+        <el-input v-model="client.note" type="textarea" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">Create</el-button>
