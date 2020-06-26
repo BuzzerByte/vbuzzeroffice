@@ -49,7 +49,7 @@ service.interceptors.response.use(
       duration: 5 * 1000,
     });
     return Promise.reject(error);
-  },
+  }
 );
 
 export default service;
