@@ -3,7 +3,7 @@ import Resource from '@/api/resource';
 
 class VendorResource extends Resource {
   constructor() {
-    super('vendors');
+    super('api/vendors');
   }
 
   permissions(id) {
