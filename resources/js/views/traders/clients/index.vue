@@ -199,7 +199,7 @@ import permission from '@/directive/permission'; // Waves directive
 import checkPermission from '@/utils/permission'; // Permission checking
 
 const clientResource = new ClientResource();
-const permissionResource = new Resource('api/permissions');
+const permissionResource = new Resource('permissions');
 
 export default {
   name: 'ClientList',

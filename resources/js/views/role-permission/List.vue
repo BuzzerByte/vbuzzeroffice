@@ -68,7 +68,7 @@ import permission from '@/directive/permission'; // Permission directive (v-perm
 import checkPermission from '@/utils/permission'; // Permission checking
 
 const roleResource = new RoleResource();
-const permissionResource = new Resource('api/permissions');
+const permissionResource = new Resource('permissions');
 
 export default {
   name: 'RoleList',
