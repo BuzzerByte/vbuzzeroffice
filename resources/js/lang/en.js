@@ -188,6 +188,14 @@ export default {
     'confirmPassword': 'Confirm password',
     'name': 'Name',
     'email': 'Email',
+    'company': 'Company',
+    'phone': 'Phone',
+    'open_balance': 'Open Balance',
+    'fax': 'Fax',
+    'website': 'Website',
+    'billing_address': 'Billing Address',
+    'shipping_address': 'Shipping Address',
+    'note': 'Note',
   },
   roles: {
     description: {
